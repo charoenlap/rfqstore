@@ -1,0 +1,267 @@
+
+.select2-container--default .select2-selection--single {
+  border: 1px solid #ced4da !important; 
+}
+.btn-search	{
+	margin-top: -10px;
+}
+#sidebar-wrapper .list-group .fas{
+	display: inline-block;
+    min-width: 25px;
+}
+.nav-scroller {
+  border-bottom: 1px solid #dee2e6;
+}
+.nav-underline .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+  color: #6c757d;
+}
+
+.nav-underline .nav-link:hover {
+  /*color: #007bff;*/
+  color: #27a9b9;
+}
+.nav-underline .nav-link{
+  /*border-top: solid 3px #e3e3e3;*/
+}
+.nav-underline .nav-link.active {
+  font-weight: 900;
+  /*color: #007bff;*/
+  /*border-top: solid 3px #007bff;*/
+  color: #27a9b9;
+}
+.breadcrumb {
+  margin-bottom: 0px;
+}
+nav.navbar + nav{
+  /*margin-bottom: -25px;*/
+}
+.select2-selection__rendered {
+    line-height: 38px !important;
+}
+.select2-container .select2-selection--single {
+    height: 38px !important;
+}
+.select2-selection__arrow {
+    height: 38px !important;
+}
+.min-box{
+  height: 30px !important;
+}
+.table-totle .form-group {
+  margin-bottom: 0px !important;
+}
+.handle {
+  color: #3e3e3e;
+}
+.handle:hover {
+  color: #e3e3e3;
+}
+
+
+
+/* FLASH CSS */
+
+/* menu */
+.menu-left {
+  background: #fff !important;
+}
+.menu-list {
+  background: #fff !important;
+}
+.menu-list a svg {
+  width: 20px !important;
+  margin-right: 8px !important;
+}
+.menu-list a {
+  border: 0!important;
+  /*border-top: 1px solid #eee;*/
+  /*border-bottom: 1px solid #eee;*/
+}
+.list-group-flush:last-child 
+.list-group-item:last-child {
+  border-bottom: 1px solid #eee;
+}
+.list-group-item-action:hover {
+  background-color: #27a9b9;
+  background-image: linear-gradient(to bottom right, #27a9b9, #65BAC6);
+  color: #fff;
+  transition: all 0.15s;
+}
+.list-name-company {
+  background: #27a9b9;
+  background-image: linear-gradient(to bottom right, #27a9b9, #65BAC6);
+  color: #fff;
+}
+.multi-collapse a {
+  padding-left: 40px !important;
+}
+.navbar-expand-lg {
+  background: #27a9b9;
+  background-image: linear-gradient(to bottom right, #27a9b9, #65BAC6);
+}
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.8rem 1.25rem;
+}
+
+/* text */
+.text-theme {
+  color: #27a9b9;
+}
+.text-theme:hover {
+  color: #27a9b9;
+}
+
+/* button */
+.btn-theme {
+  background: #27a9b9 !important;
+  border-color: #27a9b9 !important;
+}
+a.btn-dashboard {
+  display: block;
+  background: #27a9b9;
+  text-align: center;
+  padding: 20px 0;
+  text-decoration: none;
+  /*border: 2px solid #27a9b9;*/
+  transition: ease-out 0.5s;
+}
+a.btn-dashboard h5 {
+  color: #fff;
+  font-size: 26px;
+  margin-bottom: 0;
+}
+a.btn-dashboard svg {
+  font-size: 34px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+a.btn-dashboard:hover {
+  background: #fff;
+  box-shadow: inset 200px 0 0 0 #fff;
+}
+a.btn-dashboard:hover h5,
+a.btn-dashboard:hover svg {
+  color: #27a9b9;
+}
+.form-control {
+  border-radius: 0;
+  border: 2px solid #eee;
+}
+.form-control:focus {
+  border-color: #27a9b9;
+  box-shadow: none;
+  /*box-shadow: 0 0 0 0.2rem rgba(39, 169, 185, 0.25);*/
+}
+
+/* breadcrumb */
+.breadcrumb {
+  background-color: #fff;
+  border-radius: 0;
+}
+.breadcrumb .breadcrumb-item a {
+  color: #333;
+}
+
+/* shadow */
+.shadow-theme {
+  box-shadow: 0px 10px 40px -10px rgba(0,64,128,0.2);
+}
+
+/* body */
+#page-content-wrapper {
+  /*background: #fdfdfd !important;*/
+  background-color: #E6E6E6 !important;
+}
+#page-content-wrapper .container-fluid {
+  min-height: 75%;
+}
+
+/* title */
+.menu-title {
+  display: block;
+  width: 100%;
+  padding: 7px 10px;
+  background: #fff !important;
+  color: #333;
+  font-size: 18px;
+  border: 1px solid rgba(0,0,0,0.125);
+}
+
+/* footer */
+footer {
+  /*background: #E6E6E6 !important;*/
+  background: transparent !important;
+  padding: 10px 0;
+  color: #27a9b9 !important;
+}
+
+/* table */
+.table-theme thead {
+  background: #27a9b9;
+  color: #fff;
+}
+.table-borderless td {
+  border: 0 !important;
+}
+#list_order thead th {
+  font-size: 16px !important;
+}
+#list_order tbody td {
+  font-size: 12px !important;
+}
+
+/* pageing */
+.pagination-theme .page-item.active .page-link {
+  background: #27a9b9;
+  border-color: #27a9b9;
+}
+.pagination-theme .page-link {
+  color: #27a9b9;
+}
+
+/* background */
+.bg-theme {
+  background: #27a9b9 !important;
+}
+
+
+/* icon */
+.icon-accounting {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+/* card */
+.card-accounting h4 {
+  color: #666;
+}
+
+
+#btn-form-bill-submit{
+  display: inline;
+}
+#btn-form-bill-submit2 {
+  background:#fff !important;
+  color: #27a9b9 !important;
+  display: inline;
+}
+
+/* cal */
+.btn-cal, .submit-cal {
+  width: 100%;
+  border-radius: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.table-cal tr td {
+  padding: 0;
+}
+.input-cal, .output-cal {
+  background: #23272b !important;
+  border-color: #23272b;
+  color: #fff !important;
+}

@@ -82,7 +82,7 @@
         <a href="<?php echo route('product/home'); ?>" class="list-group-item list-group-item-action"><i class="fas fa-box"></i> สินค้า</a>
         <?php endif ?>
         <?php if (in_array('shop/home', $permission)): ?>
-        <a href="<?php echo route('shop/home'); ?>" class="list-group-item list-group-item-action"><i class="fas fa-tv"></i> ร้านค้า</a>
+        <a href="<?php echo route('shop/sale'); ?>" class="list-group-item list-group-item-action"><i class="fas fa-tv"></i> ร้านค้า</a>
         <?php endif ?>
         <?php if (in_array('customer/home', $permission)): ?>
         <a href="<?php echo route('customer/home'); ?>" class="list-group-item list-group-item-action"><i class="fas fa-address-book"></i> ลูกค้า/ผู้จำหน่าย</a>

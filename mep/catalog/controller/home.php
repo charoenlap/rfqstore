@@ -36,7 +36,13 @@
 	    	$this->rmSession('id_company');
 	    	$this->rmSession('company_name'); 
 
- 	    	$this->view('home',$data);
+	    	// $count_company = count($data['list_company']);
+	    	// if($count_company==1){
+	    		// $this->redirect('company&id_company='.encrypt($data['list_company'][0]['id_company']));
+	    	// }else{
+	    		$this->view('home',$data);
+	    	// }
+ 	    	
 	    }
 
 	}

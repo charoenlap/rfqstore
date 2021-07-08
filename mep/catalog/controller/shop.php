@@ -118,7 +118,7 @@
 				$result = $model_shop->addOrder($insert);
 				if ($result>0) {
 					$this->rmSession('addtocart');
-					$this->setSession('success', 'ชำระเงินเรียบร้อย');
+					$this->setSession('success', 'ชำระเงินเรียบร้อย <div id="id_order" style="display:none;">'.encrypt($result).'</div>');
 				} else {
 					$this->setSession('error', 'เกิดข้อผิดพลาดในการชำระเงิน');
 				}

@@ -7,7 +7,7 @@
 </div> --> 
 <div>
 	<!-- <img src="https://via.placeholder.com/1920/27a9b9/ffffff?text=banner" alt="" class="w-100" height="600"> -->
-	<img src="assets/image/bannernew.png" alt="" class="w-100" style="height: 350px;">
+	<img src="assets/image/bannernew.png" alt="" class="w-100" style="height: 250px;">
 </div>
 <section class="py-5">
 	<div class="container"> 

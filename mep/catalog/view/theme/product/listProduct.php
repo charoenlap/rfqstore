@@ -46,6 +46,7 @@
 							<td class="text-right"><?php echo number_format($product['product_quantity'],2); ?></td>
 							<td class="text-center"><?php echo $product['product_unit']; ?></td>
 							<td class="text-center"><?php echo $product['product_status']==1?'เปิด':'ปิด'; ?></td>
+							
 							<td class="text-center">
 								<a href="<?php echo route('product/editProduct').'&id='.encrypt($product['id_product']); ?>" class="btn btn-warning btn-sm">
 									<i class="fas fa-edit"></i>

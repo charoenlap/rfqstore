@@ -76,6 +76,8 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
+      <li id="contact" class="nav-item">
+        <a class="nav-link" href="https://www.rfqstore.com/%E0%B8%84%E0%B8%B9%E0%B9%88%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%9Arfq-sote.pdf"target="_blank">คู่มือการใช้งานระบบ</a>
       <li id="home" class="nav-item">
         <a class="nav-link" href="<?php echo route('home'); ?>">หน้าหลัก</a>
       </li>

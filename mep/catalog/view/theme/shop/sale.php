@@ -1,12 +1,12 @@
 <?php echo $breadcrumb; ?>
 <?php echo $headerMenu; ?>
-<div class="container-fluid">
+<div class="container-fluid" id="panel-page">
 	<div class="row">
 		<div class="col-12">
 			<?php if (!empty($success)): ?>
 				<div class="card my-3">
 					<div class="card-body">
-						<div class="alert alert-success" role="alert"><?php echo $success; ?></div>		
+						<div class="alert alert-success" role="alert"><?php echo $success; ?></div>
 					</div>
 				</div>
 				
@@ -54,12 +54,16 @@
 					<div class="form-row">
 						<?php foreach ($products as $product): ?>
 						<div class="form-group col-md-4 mb-0">
-							<button class="addtocart" data-id="<?php echo encode($product['id_product'],KEY);?>" >
-							<div class="card rounded-0">
-								<img class="card-img-top img-fluid" src="<?php echo IMAGE.$product['product_image']; ?>" alt="">
-								<div class="card-body">
-									<span><?php echo $product['product_name']; ?></span>
-									<small><?php echo $product['product_special']>0?'<s>'.$product['product_price'].'</s> <span class="text-danger font-weight-bold">'.$product['product_special'].'</span>' : '<b>'.$product['product_price'].'</b>'; ?></small>
+							<button class="addtocart" data-id="<?php echo encode($product['id_product'],KEY);?>" style="width:100%;">
+							<div class="card rounded-0" style="width:100%;height:250px;background:url('<?php echo IMAGE.$product['product_image']; ?>');background-position:center;background-size: cover;">
+								<!-- <img class="card-img-top img-fluid" src="" alt=""> -->
+								<div class="card-body ">
+									<div class="bg-info">
+										<span class=""><?php echo $product['product_name']; ?></span>
+									</div>
+									<div class="bg-success">
+										<small><?php echo $product['product_special']>0?'<s>'.$product['product_price'].'</s> <span class="text-danger font-weight-bold">'.$product['product_special'].'</span>' : '<b>'.$product['product_price'].'</b>'; ?></small>
+									</div>
 								</div>
 							</div>
 							</button>
@@ -68,6 +72,8 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="col-md-4">
 			<div class="card my-3 rounded-0">
 				<div class="card-body">
 					<form action="<?php echo route('shop/sale');?>" method="post">
@@ -75,8 +81,6 @@
 					</form>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-4">
 			<div class="card rounded-0 mt-3">
 				<div class="card-body p-0">
 					<form action="<?php echo $action_save; ?>" method="post" id="formorder">
@@ -211,10 +215,179 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <style>
-button.addtocart { background: none; border:0; }
+	button.addtocart { background: none; border:0; }
+	#printorder {
+		display: none;
+	}
+	@media print {
+		#panel-page {
+			display: none;
+		}
+		nav {
+			display: none;
+		}
+		#sidebar-wrapper {
+			display: none;
+		}
+		.nav-scroller {
+			display: none;
+		}
+		.site-footer {
+			display: none;
+		}
+		#printorder {
+			display: block;
+			margin-top: 100px;
+			width: 300px;
+			padding-left: 10px;
+		}
+		#modal_view {
+			display: none !important;
+		}
+		.modal-backdrop {
+			display: none !important;
+		}
+	}
 </style> 
+<div id="printorder">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 mb-5">
+				<h5>ใบกำกับภาษีอย่างย่อ</h5>
+				<h5 id="company_taxid_Print">Tax</h5>
+				<h5 id="company_name_Print">Company</h5>
+				<h5 id="company_address_Print">Address</h5>
+			</div>
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<tbody id="listitemPrint"> 
+						<tr>
+							<td>1</td>
+							<th>
+								<p class="mb-0">Item @100.00</p>
+							</th> 
+							<td class="text-right">100.00</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th class="px-2 py-1" colspan="2">ยอดชำระ</th> 
+							<td class="px-2 py-1 text-right" id="total">100.00</td>
+						</tr>
+						<tr>
+							<td class="px-2 py-1" colspan="2"><small>เงินสด</small></td>
+							<td class="px-2 py-1 text-right"><small id="received">100.00</small></td>
+						</tr>
+						<tr>
+							<td class="px-2 py-1" colspan="2"><small>เงินทอน</small></td>
+							<td class="px-2 py-1 text-right"><small id="change">0.00</small></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="modal_view">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="text-center">
+					<!-- <img src="" alt="" id="company_logo" style="width:70%; margin:0 auto;"> -->
+					<b><p class="mb-0">ใบกำกับภาษีอย่างย่อ</p></b>
+					<p class="mb-1" id="company_taxid">Tax</p>
+					<b><p class="mb-0" id="company_name">Company</p></b>
+					<p class="mb-2" id="company_address">Address</p>
+					<!-- <h4 class="mb-0" id="headtotal">100.00</h4> -->
+					<!-- <p>ยอดชำระ</p> -->
+				</div>
+				<table class="table table-bordered">
+					<tbody id="listitem"> 
+						<tr>
+							<td>1</td>
+							<th>
+								<p class="mb-0">Item @100.00</p>
+							</th> 
+							<td class="text-right">100.00</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th class="px-2 py-1" colspan="2">ยอดชำระ</th> 
+							<td class="px-2 py-1 text-right" id="total">100.00</td>
+						</tr>
+						<tr>
+							<td class="px-2 py-1" colspan="2"><small>เงินสด</small></td>
+							<td class="px-2 py-1 text-right"><small id="received">100.00</small></td>
+						</tr>
+						<tr>
+							<td class="px-2 py-1" colspan="2"><small>เงินทอน</small></td>
+							<td class="px-2 py-1 text-right"><small id="change">0.00</small></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+				<!-- <button type="button" class="btn btn-primary"></button> -->
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
+		
+			var buttonid = $('#id_order').text();//button.data('id')
+			// console.log(buttonid);
+			if(buttonid!=''){
+				window.print();
+				$('#modal_view').modal('show');
+				$.ajax({
+					url: '<?php echo route('shop/getOrder');?>',
+					type: 'POST',
+					dataType: 'json', 
+					data: {id: buttonid},
+					success: function(data) {
+
+						console.log(data);
+						// if (data.company.company_logo != null) {
+						// 	$('#company_logo').attr('src', '<?php echo MURL;?>uploads'+data.company.company_logo);
+						// }
+						if (data.company.company_name != null) {
+							$('#company_name').html(data.company.company_name);
+							$('#company_name_Print').html(data.company.company_name);
+						}
+						if (data.company.company_tax_no != null) {
+							$('#company_taxid').html(data.company.company_tax_no);
+							$('#company_taxid_Print').html(data.company.company_tax_no);
+						}
+						if (data.company.company_address != null) {
+							$('#company_address').html(data.company.company_address);
+							$('#company_address_Print').html(data.company.company_address);
+						}
+						$.each(data, function(index, val) {
+							 $('#'+index).html(addCommas(val));
+							 $('#head'+index).html(addCommas(val));
+							 if (index=='products') {
+							 	var html = ''; 
+							 	$.each(val, function(indexProduct, valProduct) {
+							 		var sum = parseFloat(valProduct['quantity']) * parseFloat(valProduct['price']);
+									html += '<tr>'+
+									'   <td>'+valProduct['quantity']+'</td>'+
+									'	<td>'+
+									'		<p class="mb-0">'+valProduct['name']+' @'+addCommas(valProduct['price'])+'</p>'+
+									// '		<small>'+valProduct['quantity']+' x '+addCommas(valProduct['price'])+'</small>'+
+									'	</td> '+
+									'	<td class="text-right">'+addCommas(sum.toFixed(2))+'</td>'+
+									'</tr>';
+							 	});
+							 	$('#listitem').html(html);
+							 	$('#listitemPrint').html(html);
+							 }
+						});
+					}
+				});
+			}
 		// $('#modal_result').on('show.bs.modal', function (event) {
 		// 	var button = $(event.relatedTarget) 
 		// 	var total = button.data('total')
@@ -304,6 +477,7 @@ button.addtocart { background: none; border:0; }
 			var id = $(this).data('id');
 			var img = $(this).data('img');
 			var productname = $(this).data('name');
+
 			$.ajax({
 				url: '<?php echo route('shop/addtocart'); ?>',
 				type: 'POST',

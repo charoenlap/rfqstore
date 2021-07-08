@@ -1,6 +1,6 @@
 <?php echo $breadcrumb; ?>
 <?php echo $headerMenu; ?>
-<div class="container-fluid">
+<div class="container-fluid" id="hide-print">
 	<div class="card my-3">
 		<div class="card-body">
 			<div class="row">
@@ -63,14 +63,14 @@
 										<!-- <a href="#" class="btn btn-warning btn-sm">
 											<i class="fas fa-edit"></i>
 										</a> -->
-										<div class="btn-group" role="group">
+										<!-- <div class="btn-group" role="group">
 										    <button id="btnGroupDrop1" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										      <i class="fas fa-print"></i>
 										    </button>
 										    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 										      <a class="dropdown-item" href="#"></a>
 										    </div>
-										</div>
+										</div> -->
 										<!-- <a href="#" class="btn btn-info btn-sm">
 											<i class="fas fa-paperclip"></i>
 										</a> -->
@@ -94,7 +94,76 @@
 		</div>
 	</div>
 </div>
-
+<style>
+	#printorder {
+		display: none;
+	}
+	@media print {
+		#panel-page {
+			display: none;
+		}
+		nav {
+			display: none;
+		}
+		#sidebar-wrapper {
+			display: none;
+		}
+		.nav-scroller {
+			display: none;
+		}
+		.site-footer {
+			display: none;
+		}
+		#printorder {
+			display: block;
+			margin-top: 100px;
+			width: 300px;
+			padding-left: 10px;
+		}
+		#modal_view {
+			display: none !important;
+		}
+		#hide-print {
+			display: none;
+		}
+		.modal-backdrop {
+			display: none !important;
+		}
+	}
+</style> 
+<div id="printorder">
+	<div class="mb-5">
+		<h5>ใบกำกับภาษีอย่างย่อ</h5>
+		<h5 id="company_taxid_Print">Tax</h5>
+		<h5 id="company_name_Print">Company</h5>
+		<h5 id="company_address_Print">Address</h5>
+	</div>
+	<table class="table table-bordered">
+		<tbody id="listitemPrint"> 
+			<tr>
+				<td>1</td>
+				<th>
+					<p class="mb-0">Item @100.00</p>
+				</th> 
+				<td class="text-right">100.00</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th class="px-2 py-1" colspan="2">ยอดชำระ</th> 
+				<td class="px-2 py-1 text-right" id="total">100.00</td>
+			</tr>
+			<tr>
+				<td class="px-2 py-1" colspan="2"><small>เงินสด</small></td>
+				<td class="px-2 py-1 text-right"><small id="received">100.00</small></td>
+			</tr>
+			<tr>
+				<td class="px-2 py-1" colspan="2"><small>เงินทอน</small></td>
+				<td class="px-2 py-1 text-right"><small id="change">0.00</small></td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
 <div class="modal" tabindex="-1" role="dialog" id="modal_view">
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
@@ -159,12 +228,15 @@ jQuery(document).ready(function($) {
 				// }
 				if (data.company.company_name != null) {
 					$('#company_name').html(data.company.company_name);
+					$('#company_name_Print').html(data.company.company_name);
 				}
 				if (data.company.company_tax_no != null) {
 					$('#company_taxid').html(data.company.company_tax_no);
+					$('#company_taxid_Print').html(data.company.company_tax_no);
 				}
 				if (data.company.company_address != null) {
 					$('#company_address').html(data.company.company_address);
+					$('#company_address_Print').html(data.company.company_address);
 				}
 				$.each(data, function(index, val) {
 					 $('#'+index).html(addCommas(val));
@@ -183,6 +255,7 @@ jQuery(document).ready(function($) {
 							'</tr>';
 					 	});
 					 	$('#listitem').html(html);
+					 	$('#listitemPrint').html(html);
 					 }
 				});
 			}

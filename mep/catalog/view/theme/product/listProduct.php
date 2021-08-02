@@ -31,6 +31,7 @@
 					<thead>
 						<th>รหัส</th>
 						<th>ชื่อสินค้า</th>
+						<th>หมวดหมู่</th>
 						<th class="text-right">ราคา</th>
 						<th class="text-right">จำนวน</th>
 						<th class="text-center">หน่วย</th>
@@ -42,6 +43,15 @@
 						<tr>
 							<td><?php echo $product['product_code']; ?></td>
 							<td><?php echo $product['product_name']; ?></td>
+							<td>
+								<?php
+									foreach($categories as $categorie){
+										if($product['id_category'] == $categorie['id_category']){
+											echo $categorie['category_name'];
+										}
+									}
+								?>
+							</td>
 							<td class="text-right"><?php echo $product['product_special']>0 ? '<s>'.number_format($product['product_price'],2).'</s> '.number_format($product['product_special'],2) : number_format($product['product_price'],2); ?></td>
 							<td class="text-right"><?php echo number_format($product['product_quantity'],2); ?></td>
 							<td class="text-center"><?php echo $product['product_unit']; ?></td>

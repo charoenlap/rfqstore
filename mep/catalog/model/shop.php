@@ -1,9 +1,16 @@
 <?php 
 	class ShopModel extends db {
-		public function getOrders() {
+		public function getOrders($pos ="",$date_start="",$date_end="") {
 			$order = array();
 			$this->order_by('id_order', 'DESC');
 			$this->where('id_company', id_company());
+			if(!empty($pos)){
+				$this->where('pos',$pos);
+			}
+			if(!empty($date_start) && !empty($date_end)){
+				$this->where('date_added',$date_start,'>=');
+				$this->where('date_added',$date_end,'<=');
+			}
 			$result = $this->get('order');
 			foreach ($result->rows as $key => $value) {
 				$this->where('id_order', $value['id_order']);

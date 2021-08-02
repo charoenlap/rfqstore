@@ -69,7 +69,7 @@
 										      <i class="fas fa-print"></i>
 										    </button>
 										    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-										      <a class="dropdown-item" href="#">ใบรับรองเงินเดือน</a>
+										      <a class="dropdown-item" target="_blank" href="<?php echo $link_salary."&id=".encrypt($employee['id_employee']); ?>">ใบรับรองเงินเดือน</a>
 										    </div>
 										</div>
 										<!-- <a href="#" class="btn btn-info btn-sm">

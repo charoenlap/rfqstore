@@ -13,6 +13,6 @@ jQuery(document).ready(function($) {
       format: "dd-mm-yyyy",
       language: "th",
       autoclose: true,
-      toggleActive: true
+      toggleActive: true,
     });
 });

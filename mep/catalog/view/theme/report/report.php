@@ -47,10 +47,21 @@
                 <input type="text" class="form-control inputdatepicker" name="date_end" placeholder="วันที่สุดท้าย" value="<?php echo $date_end;?>">
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <div class="form-group">
                 <label for="">&nbsp;</label>
-                <input type="submit" class="form-control btn btn-primary" value="ค้นหา" id="filtersubmit">
+                <button type="submit" class="btn btn-info rounded-0 w-100" id="filtersubmit">
+                ค้นหา
+									</button>
+                <!-- <input type="submit" class="form-control btn btn-info" value="ค้นหา" id="filtersubmit"> -->
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="form-group">
+                <label for="">&nbsp;</label>
+                <button type="button" class="btn btn-info rounded-0 w-100" data-toggle="modal" data-target="#modal_export">
+										Export
+									</button>
               </div>
             </div>
           </div>
@@ -113,6 +124,55 @@
       </div>
     </div>
   </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_export">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content border-0">
+			<form action="<?php echo $action_export; ?>" method="POST">
+				<div class="modal-header bg-info">
+					<h3 class="text-white">EXPORT</h3>
+					<hr>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+                <label for="">ประเภท</label>
+                <select name="type_bill" id="export_bill" class="form-control">
+                  <optgroup label="ขาย">
+                    <option value="quotation" <?php echo $type_bill=='quotation'?'selected':'';?>>ใบเสนอราคา</option>
+                    <option value="billingnote" <?php echo $type_bill=='billingnote'?'selected':'';?>>ใบวางบิล/ใบแจ้งหนี้/ใบส่งของ</option>
+                    <option value="receipt" <?php echo $type_bill=='receipt'?'selected':'';?>>ใบเสร็จรับเงิน</option>
+                  </optgroup>
+                  <optgroup label="ซื้อ">
+                    <option value="purchaseOrder" <?php echo $type_bill=='purchaseOrder'?'selected':'';?>>ใบสั่งซื้อ</option>
+                    <option value="productReceipt" <?php echo $type_bill=='productReceipt'?'selected':'';?>>ใบรับสินค้า</option>
+                  </optgroup>
+                  <optgroup label="ค่าใช้จ่าย">
+                    <option value="theCost" <?php echo $type_bill=='theCost'?'selected':'';?>>ค่าใช้จ่าย</option>
+                    <option value="withholdingTax" <?php echo $type_bill=='withholdingTax'?'selected':'';?>>ใบหักภาษี ณ​ ที่ จ่าย</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+						<div class="col-md-6">
+							<label for="">วันที่ตั้งแต่</label>
+							<input type="text" class="form-control inputdatepicker mb-1" name="date_start" placeholder="วันที่ตั้งแต่" value="<?php echo $date_start; ?>">
+						</div>
+						<div class="col-md-6">
+							<label for="">จนถึงวันที่</label>
+							<input type="text" class="form-control inputdatepicker mb-1" name="date_end" placeholder="จนถึงวันที่" value="<?php echo $date_end; ?>">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-info">Export</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+					<!-- <button type="button" class="btn btn-primary"></button> -->
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 <script>
 jQuery(document).ready(function($) {

@@ -86,6 +86,7 @@ class ReportController extends Controller {
         $data['script'] = $script;
 
         $data['action'] = route('report/report');
+        $data['action_export'] = route('report/export_report');
         
         $data['reports']    = array();
         $data['type_bill']  = '';
@@ -125,6 +126,36 @@ class ReportController extends Controller {
 
         $this->view('report/report',$data);
     }
+    public function export_report(){
+        $data = array();
+        $data['reports']    = array();
+        $data['type_bill']  = '';
+        $data['date_start'] = '01-'.date('m').'-'.(date('Y')+543);
+        $data['date_end']   = sprintf('%02d', date('t')).'-'.date('m').'-'.(date('Y')+543);
+        if (method_post()) {
+            $data['type_bill']  = post('type_bill');
+            $data['date_start'] = post('date_start');
+            $data['date_end']   = post('date_end');
 
+            $date_start = $data['date_start'];
+            $ex = explode('-', $date_start);
+            $ex[2] -= 543;
+            $new = array();
+            for ($i=2; $i>=0; $i--) { $new[] = $ex[$i]; }
+            $date_start = implode('-', $new);
+
+            $date_end = $data['date_end'];
+            $ex = explode('-', $date_end);
+            $ex[2] -= 543;
+            $new = array();
+            for ($i=2; $i>=0; $i--) { $new[] = $ex[$i]; }
+            $date_end = implode('-', $new);
+
+            $report = $this->model('report');
+
+            $data['reports'] = $report->getReport(post('type_bill'), $date_start, $date_end);    
+        }
+        $this->view('report/export_report',$data,false);
+    }
    
 }

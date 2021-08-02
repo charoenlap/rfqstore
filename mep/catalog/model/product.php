@@ -66,12 +66,22 @@
 			$this->where('id_product', (int)$id);
 			$thumb = $this->get('product_image');
 
+			
+			$this->where('id_product',(int)$id);
+			$option = $this->get('product_option');
+
 			$this->where('id_product', (int)$id);
 			$result = $this->get('product');
 			$product = $result->row;
 			$product['product_thumb'] = $thumb->rows;
+			$product['product_option_price'] = $option->rows;
 
 			return $product;
+		}
+		public function getProductByCategory($id_category){
+			$this->where('id_category', $id_category);
+			$result = $this->get('product');
+			return $result->rows;
 		}
 		public function addProduct($data=array()) {
 			$product_thumb = (isset($data['product_thumb'])?$data['product_thumb']:'');
@@ -89,7 +99,9 @@
 		}
 		public function editProduct($data=array(),$id) {
 			$product_thumb = $data['product_thumb'];
+			$product_option_price = $data['product_option'];
 			unset($data['product_thumb']);
+			unset($data['product_option']);
 
 			$result = $this->update('product',$data,'id_product='.(int)$id);
 
@@ -98,6 +110,16 @@
 			foreach ($product_thumb as $thumb) {
 				$this->insert('product_image', array('id_product'=>$id,'image'=>$thumb));
 			}
+			foreach ($product_option_price as $option) {
+				$this->insert('product_option_price',array(
+					'id_product'				=> $id,
+					'product_option_price'		=> $option['product_option_price'],
+					'product_option_special'	=> $option['product_option_special'],
+					'product_option_quantity'	=> $option['product_option_quantity'],
+					'product_option_name'		=> $option['product_option_name'],
+					'product_option_sort'		=> $option['product_option_sort']
+				));
+			}
 
 			return $result;
 		}
@@ -105,12 +127,19 @@
 			$this->where('id_product',$id);
 			$this->delete('product_image');
 
+			$this->where('id_product',$id);
+			$this->delete('product_option');
+
 			$this->where('id_product', $id);
 			return $this->delete('product');
 		}	
 		public function deleteProductThumb($id) {
 			$this->where('id_product_image', $id);
 			return $this->delete('product_image');
+		}
+		public function deleteProductOption($id){
+			$this->where('id_product_option',$id);
+			return $this->delete('product_option');
 		}
 		public function countProductPerMonth() {
 			$sql = 'SELECT CONCAT(LPAD(MONTH (date_created),2,0),"-",YEAR (date_created)) AS `month`,count(*) AS `count` FROM com_product WHERE id_company = '.id_company().' AND date_created IS NOT NULL AND date_created LIKE \''.date('Y',time()).'%\' GROUP BY YEAR (date_created),MONTH (date_created) ';
@@ -148,6 +177,7 @@
 			return $query->num_rows;
 		}
 		public function getCategory($id) {
+			$this->where('id_company',id_company());
 			$result = $this->query("SELECT * FROM com_category WHERE id_category = ".(int)$id);
 			return $result->row;
 		}

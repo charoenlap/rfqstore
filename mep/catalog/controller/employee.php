@@ -46,6 +46,7 @@
 	    	$data['breadcrumb'] = breadcrumb($breadcrumb);
 	    	$data['headerMenu'] = $this->getMenu('list');
 	    	$data['link_edit'] = route('employee/editEmployee');
+	    	$data['link_salary'] = route('employee/EmployeeSalary');
 	    	$data['link_search'] = route('employee');
 
 	    	$data['search'] = ''; 
@@ -80,6 +81,86 @@
 
  	    	$this->view('employee/listEmployee',$data);
 	    }
+		public function EmployeeSalary(){
+			$data = array();
+			$style = array(
+				'assets/css/select2.css',
+				'assets/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.css'
+			);
+			$data['style'] = $style;
+			$script = array(
+				'assets/js/select2.full.js',
+				'assets/boostrap_jquery/js/jquery-ui.js',
+				'assets/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.js',
+				'assets/bootstrap-datepicker-master/dist/locales/bootstrap-datepicker.th.min.js',
+				'assets/boostrap_jquery/js/bootstrap-datepicker-BE.js',
+			);
+			$data['script'] = $script;
+			$data['action'] = route('employee/EmployeeSalary');
+			$style = array(
+				'assets/css/select2.css',
+				'assets/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.css'
+			);
+			$data['style'] = $style;
+			$script = array(
+				'assets/js/select2.full.js',
+				'assets/boostrap_jquery/js/jquery-ui.js',
+				'assets/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.js',
+				'assets/bootstrap-datepicker-master/dist/locales/bootstrap-datepicker.th.min.js',
+				'assets/boostrap_jquery/js/bootstrap-datepicker-BE.js',
+			);
+			$data['script'] = $script;
+			$data['date_start'] = '01-'.date('m').'-'.(date('Y')+543);
+			$id = decrypt(get('id'));
+			$model_employee = $this->model('employee');
+			$model_company = $this->model('company');
+			$employee_info = $model_employee->getEmpById($id);
+			$data['company_info'] = $model_company->getCompany();
+			$data['id_user']            = $employee_info['id_user'];
+			$data['employee_code']      = $employee_info['employee_code'];
+			$data['employee_email']     = $employee_info['employee_email'];
+			$data['employee_firstname'] = $employee_info['employee_firstname'];
+			$data['employee_lastname']  = $employee_info['employee_lastname'];
+			$data['employee_salary']    = $employee_info['employee_salary'];
+			$data['employee_startwork'] = $employee_info['employee_startwork'];
+			$month = array(
+				"1"		=> "มกราคม",
+				"2"		=> "กุมภาพันธ์",
+				"3"		=> "มีนาคม",
+				"4"		=> "เมษายน",
+				"5"		=> "พฤษภาคม",
+				"6"		=> "มิถุนายน",
+				"7"		=> "กรกฎาคม",
+				"8"		=> "สิงหาคม",
+				"9"		=> "กันยายน",
+				"10"	=> "ตุลาคม",
+				"11"	=> "พฤศจิกายน",
+				"12"	=> "ธันวาคม",
+			);
+			foreach($month as $key => $value){
+				$month_en = date('m');
+				if($month_en == $key){
+					$data['month_th'] = $value;
+				}
+			}
+			$data['total_amount'] = "";
+			$data['total_deduc'] = "";
+			$data['total_decrease'] = "";
+			if(method_post()){
+
+				$input = $_POST;
+				$salary = $employee_info['employee_salary'];
+				$data['total_amount'] = $salary + $input['income'];
+				$total_decrease  = $input['tax'] + $input['social'] + $input['tax_social'];
+				$data['total_decrease']  = $input['tax'] + $input['social'] + $input['tax_social'];
+				$data['total_deduc'] = $data['total_amount'] - $total_decrease;
+				// echo "<pre>";
+				// print_r($_POST);
+				// echo "</pre>";			
+
+			}
+			$this->view('employee/EmployeeSalary',$data,false);
+		}
 	    public function addEmployee() {
 			$breadcrumb            = array();
 			$breadcrumb[]          = array('text'=>'หน้าหลัก','url'=>route('employee/home'));

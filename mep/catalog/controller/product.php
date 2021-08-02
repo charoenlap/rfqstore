@@ -87,6 +87,37 @@
 	    	echo $html;
 	    }
 
+		public function addRowOption() {
+	    	$html = '';
+	    	if (method_post()) {
+	    		if (isset($_POST['name'])&&!empty($_POST['name'])) {
+	    			$name = $_POST['name'];
+	    			$id = $_POST['id'];
+					$html = '<div class="form-row">';
+					$html .= '<div class="form-group col-md-3">';
+					$html .= '<label for="">ชื่อรายการ</label>';
+					$html .= '<input type="text" class="form-control" id="name_'.$id.'" name="'.$name.'['.$id.'][product_option_name]" placeholder="รายการ" value="">';
+					$html .= '</div>';
+					$html .= '<div class="form-group col-md-3">';
+					$html .= '<label for="">ราคาขาย</label>';
+					$html .= '<input type="number" class="form-control" id="price_'.$id.'" name="'.$name.'['.$id.'][product_option_price]" min="0" placeholder="ราคาขาย" value="">';
+					$html .= '</div>';
+					$html .= '<div class="form-group col-md-3">';
+					$html .= '<label for="">ราคาลดพิเศษ</label>';
+					$html .= '<input type="number" class="form-control" id="special_'.$id.'" name="'.$name.'['.$id.'][product_option_special]" min="0" placeholder="ราคาลดพิเศษ" value="">';
+					$html .= '</div>';
+					$html .= '<div class="form-group col-md-3">';
+					$html .= '<label for="">จำนวนสินค้า</label>';
+					$html .= '<input type="number" class="form-control" id="quantity_'.$id.'" name="'.$name.'['.$id.'][product_option_quantity]" min="0" placeholder="จำนวนสินค้า" value="">';
+					$html .= '</div>';
+					$html .= '</div>';	
+	    		}
+	    		// echo $data['upload'] = $this->getHtml('upload/index');
+	    		// echo $this->file(post('name'), post('multiple'));
+	    	}
+	    	echo $html;
+	    }
+
 	// ================= Product ======================
 	    public function listProduct() {
 	    	$data = array();
@@ -123,6 +154,7 @@
 	    	}
 	    	$model_product = $this->model('product');
 	    	$data['products'] = $model_product->getProducts($filter);
+			$data['categories'] = $model_product->getCategories();
 
  	    	$this->view('product/listProduct',$data);
 	    }
@@ -235,21 +267,22 @@
 
 	    	$product_info = $model_product->getProduct($id);
 
-			$data['id_category']      = $product_info['id_category'];
-			$data['id_werehouse']     = $product_info['id_werehouse'];
-			$data['product_name']     = $product_info['product_name'];
-			$data['product_quantity'] = $product_info['product_quantity'];
-			$data['product_unit']     = $product_info['product_unit'];
-			$data['product_price']    = $product_info['product_price'];
-			$data['product_special']  = $product_info['product_special'];
-			$data['product_detail']   = html_entity_decode($product_info['product_detail'], ENT_QUOTES, 'UTF-8');
-			$data['product_code']     = $product_info['product_code'];
-			$data['product_image']    = $product_info['product_image'];
-			$data['product_thumb']    = $product_info['product_thumb'];
-			$data['product_status']   = $product_info['product_status'];
-			$data['product_isstock']  = $product_info['product_isstock'];
-			$data['date_created']     = $product_info['date_created'];
-			$data['date_updated']     = $product_info['date_updated'];
+			$data['id_category']      	  = $product_info['id_category'];
+			$data['id_werehouse']     	  = $product_info['id_werehouse'];
+			$data['product_name']     	  = $product_info['product_name'];
+			$data['product_quantity'] 	  = $product_info['product_quantity'];
+			$data['product_unit']     	  = $product_info['product_unit'];
+			$data['product_price']    	  = $product_info['product_price'];
+			$data['product_special']  	  = $product_info['product_special'];
+			$data['product_detail']   	  = html_entity_decode($product_info['product_detail'], ENT_QUOTES, 'UTF-8');
+			$data['product_code']     	  = $product_info['product_code'];
+			$data['product_image']    	  = $product_info['product_image'];
+			$data['product_thumb']    	  = $product_info['product_thumb'];
+			$data['product_option_price'] = $product_info['product_option_price'];
+			$data['product_status']       = $product_info['product_status'];
+			$data['product_isstock']      = $product_info['product_isstock'];
+			$data['date_created']         = $product_info['date_created'];
+			$data['date_updated']         = $product_info['date_updated'];
 
 	    	// $data['upload'] = $this->file('product_image',false,IMAGE.'product/'.$product_info['product_image']);
 

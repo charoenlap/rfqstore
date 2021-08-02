@@ -70,7 +70,7 @@
 			  	<div class="form-group row">
 			  		<label for="" class="col-sm-12 col-md-3">เงินเดือน</label>
 			  		<div class="col-sm-12 col-md-9">
-			  			<input type="number" name="employee_salary" class="form-control" placeholder="เงินเดือนพนักงาน" value="<?php echo $employee_salary;?> ?>">
+			  			<input type="number" name="employee_salary" class="form-control" placeholder="เงินเดือนพนักงาน" value="<?php echo $employee_salary;?>">
 			  		</div>
 			  	</div>
 			  	<div class="form-group row">

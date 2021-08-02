@@ -85,6 +85,7 @@
 				$filter['customer_company'] = post('search');
 			}
 			$data['customers'] = $model_customer->getCustomers($filter);
+			$data['categories'] = $model_customer->getCategories();
 
  	    	$this->view('customer/listCustomer',$data);
 	    }
@@ -218,6 +219,7 @@
 			if (method_post()) {
 				$input = array(
 					'id_company'               => id_company(),
+					'id_customer_category'	   => post('id_customer_category'),
 					'customer_type'            => post('customer_type'),
 					'customer_contacttype'     => post('customer_contacttype'),
 					'customer_credit'          => post('customer_credit'),

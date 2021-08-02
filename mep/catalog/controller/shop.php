@@ -65,7 +65,22 @@
 	    	$data['breadcrumb'] = breadcrumb($breadcrumb);
 	    	$data['headerMenu'] = $this->getMenu('sale');
 
+			
 	    	$model_product = $this->model('product');
+			// NEW PRODUCT
+			$filter = array();
+			$data['category'] = $model_product->getCategories($filter);
+			$data['product_cats'] = array();
+			$product_detail = array();
+			foreach($data['category'] as $keys => $values){
+				$product_detail[$keys] = $model_product->getProductByCategory($values['id_category']);
+				foreach($product_detail[$keys] as $key => $val){
+					$data['product_cats'][$keys][] = $model_product->getProduct($val['id_product']);
+				}
+			}
+			// END NEW
+
+			// OLD PRODUCT
 	    	$products = $model_product->getProducts();
 	    	$data['products'] = array();
 	    	foreach ($products as $key => $value) {
@@ -93,8 +108,14 @@
 	    		$data['error'] = '';
 	    	}
 
-
+				$data['totals']      = "";
+				$data['received']   = "";
+				$data['change']     = "";
 	    	if (method_post()) {
+				$data['totals']      = (double)str_replace(',', '', $_POST['total']);
+				$data['received']   = (double)str_replace(',', '', $_POST['incash']);
+				$data['change']     = (double)str_replace(',', '', $_POST['returncash']);
+
 	    		$insert = array();
 				$products = json_decode(decode($this->getSession('addtocart'), KEY), true);
 				foreach ($products as $id_product => $product) {
@@ -248,7 +269,7 @@
 	    }
 	    public function order() {
 	    	$data = array();
-	    	$data['title'] = 'Order';
+	    	$data['title'] = 'รายงานการขาย';
 	    	$pageing = array(
 	    		'total' => 10,
 	    		'link'	=> route('#'),
@@ -260,13 +281,55 @@
 	    	$breadcrumb[] = array('text'=>'รายงาน','url'=>'','active'=>1);
 	    	$data['breadcrumb'] = breadcrumb($breadcrumb);
 	    	$data['headerMenu'] = $this->getMenu('order');
+			$style = array(
+				'assets/css/select2.css',
+				'assets/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.css'
+			);
+			$data['style'] = $style;
+			$script = array(
+				'assets/js/select2.full.js',
+				'assets/boostrap_jquery/js/jquery-ui.js',
+				'assets/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.js',
+				'assets/bootstrap-datepicker-master/dist/locales/bootstrap-datepicker.th.min.js',
+				'assets/boostrap_jquery/js/bootstrap-datepicker-BE.js',
+			);
+			$data['script'] = $script;
 
+			$model_setting = $this->model('setting');
+	    	$data['list_pos'] = $model_setting->getSettingPOS();
+	    	$data['pos'] = $this->hasSession('pos') ? $this->getSession('pos') : '';
 	    	$data['action_search'] = route('shop/order');
+	    	$data['action_export'] = route('shop/export_order');
+			$data['date_start'] = '01-'.date('m').'-'.(date('Y')+543);
+			$data['date_end']   = sprintf('%02d', date('t')).'-'.date('m').'-'.(date('Y')+543);
+			$filter = array();
+			$pos = '';
+			$date_start = '';
+			$date_end = '';
+			if(method_post()){
+				$data['date_start'] = post('date_start');
+				$data['date_end']   = post('date_end');
 
+				$date_start = $data['date_start'];
+				$ex = explode('-', $date_start);
+				$ex[2] -= 543;
+				$new = array();
+				for ($i=2; $i>=0; $i--) { $new[] = $ex[$i]; }
+				$date_start = implode('-', $new);
+	
+				$date_end = $data['date_end'];
+				$ex = explode('-', $date_end);
+				$ex[2] -= 543;
+				$new = array();
+				for ($i=2; $i>=0; $i--) { $new[] = $ex[$i]; }
+				$date_end = implode('-', $new);
 
-
+				if(!empty($values['pos'])){
+					$pos = $values['pos'];
+				}
+			}
 	    	$model_shop = $this->model('shop');
-	    	$data['order'] = $model_shop->getOrders();
+	    	$data['order'] = $model_shop->getOrders($pos,$date_start,$date_end);
 	    	// echo '<pre>';
 	    	// print_r($data['order']);
 	    	// echo '</pre>';
@@ -319,6 +382,39 @@
 					</div>';
 			return $result;
 	    }
+		public function export_order(){
+			$data = array();
+			$pos = '';
+			$date_start = '';
+			$date_end = '';
+			$data['date_start'] = '01-'.date('m').'-'.(date('Y')+543);
+			$data['date_end']   = sprintf('%02d', date('t')).'-'.date('m').'-'.(date('Y')+543);
+			if(method_post()){
+				$data['date_start'] = post('date_start');
+				$data['date_end']   = post('date_end');
+
+				$date_start = $data['date_start'];
+				$ex = explode('-', $date_start);
+				$ex[2] -= 543;
+				$new = array();
+				for ($i=2; $i>=0; $i--) { $new[] = $ex[$i]; }
+				$date_start = implode('-', $new);
+	
+				$date_end = $data['date_end'];
+				$ex = explode('-', $date_end);
+				$ex[2] -= 543;
+				$new = array();
+				for ($i=2; $i>=0; $i--) { $new[] = $ex[$i]; }
+				$date_end = implode('-', $new);
+
+				if(!empty($values['pos'])){
+					$pos = $values['pos'];
+				}
+			}
+			$model_shop = $this->model('shop');
+	    	$data['order'] = $model_shop->getOrders($pos,$date_start,$date_end);
+			$this->view('shop/export_order',$data,false);
+		}
 	    
 	}
 ?>

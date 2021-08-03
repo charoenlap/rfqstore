@@ -503,6 +503,7 @@ jQuery(document).ready(function($) {
         // echo BASE.'system/db/'.DB.".php";exit();
         $base_path = str_replace('adminFsoftpro88', '', BASE.'system/db/'.DB.".php");
         $base_path = str_replace('mep', '', BASE.'system/db/'.DB.".php");
+        $base_path = str_replace('p', '', BASE.'system/db/'.DB.".php");
         require_once($base_path);
         $absolute_path = BASE_CATALOG.'controller/'.$path.'.php';
         require_once($absolute_path);

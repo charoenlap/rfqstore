@@ -1,5 +1,7 @@
 
+<?php if(PRODUCTION){ ?>
 <script src="https://www.google.com/recaptcha/api.js"></script>
+<?php } ?>
 <div class="container">
     <div class="row justify-content-center">
       	<div class="col-md-6">

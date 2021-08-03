@@ -19,6 +19,7 @@
 	    		'id_user'	 => $id_user
 	    	);
 	    	$company_detail = $company->companyDetail($data_company);
+	    	
 	    	if($company_detail){
 	    		$this->setSession('encode_id_company',encode($company_detail['id_company'],$id_user));
 		    	// $this->setSession('id_company',$company_detail['id_company']);
@@ -37,6 +38,7 @@
 	    	);
 	    	$data['script'] = $script;
 		    $data['title'] = 'Company';
+		    $data['text_title'] = 'เพิ่มบริษัท';
 		    $data['headerMenu'] = '';//$this->getHtml('accounting/getMenu&active=home');
 		    $data['id_company'] 			= '';
 			$data['id_user'] 				= '';
@@ -49,6 +51,8 @@
 			$data['company_province'] 		= '';
 			$data['company_head_office'] 	= '';
 			$data['company_date_create'] 	= '';
+			$data['company_url']			= '';
+			$data['province'] = province();
 	    	$breadcrumb = array();
 	    	$breadcrumb[] = array('text'=>'หน้าหลัก','url'=>route('home'));
 	    	$breadcrumb[] = array('text'=>'บริษัท','url'=>route('home'));
@@ -70,6 +74,7 @@
 					'id_user_create'      => id_user(),
 					'company_verify'      => 0,
 					'company_name'        => post('company_name'),
+					'company_url'         => (empty(post('company_url'))?post('company_url'):time()),
 					'company_tax_no'      => post('company_tax_no'),
 					'company_tel'         => post('company_tel'),
 					'company_address'     => post('company_address'),
@@ -242,18 +247,22 @@
 	    	);
 	    	$data['script'] = $script;
 	    	$breadcrumb = array();
+	    	$data['province'] = province();
 	    	$breadcrumb[] = array('text'=>'หน้าหลัก','url'=>route('home'));
 	    	$breadcrumb[] = array('text'=>'บริษัท','url'=>route('home'));
 	    	$breadcrumb[] = array('text'=>'แก้ไขบริษัท','url'=>'','active'=>1);
+	    	$data['text_title'] = 'แก้ไขบริษัท';
 	    	$id_company = get('id_company');
 	    	$id_user = id_user();
-	    	$id_company = decode($id_company,$id_user);
-
+	    	$id_company = (int)decrypt($id_company,$id_user);
+	    	// echo $id_company;exit();
+	    	// echo $id_company.' '.$id_user;
 	    	$data['form_id'] = 'edit';
 	    	$data['result'] 				= '';
 			$data['id_company'] 			= '';
 			$data['id_user'] 				= '';
 			$data['company_verify'] 		= '';
+			$data['company_url'] 		= '';
 			$data['company_name'] 			= '';
 			$data['company_tax_no'] 		= '';
 			$data['company_logo'] 			= '';
@@ -268,7 +277,7 @@
     			'id_user'		=> $id_user
     		);
     		$result_permission = $company->permission($data_permission);
-    		$data['action'] = route('company/editCompany&id_company='.$id_company);
+    		$data['action'] = route('company/editCompany&id_company='.encrypt($id_company,$id_user));
     		if($result_permission){
 	    		if(method_post()){
 	    			$company_logo = post('company_logo');
@@ -276,6 +285,7 @@
 						'id_company'          => $id_company,
 						'id_user'             => id_user(),
 						'company_name'        => post('company_name'),
+						'company_url'         => post('company_url'),
 						'company_tax_no'      => post('company_tax_no'),
 						'company_logo'        => $company_logo,
 						'company_tel'         => post('company_tel'),

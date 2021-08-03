@@ -1,3 +1,4 @@
+<?php if(PRODUCTION){ ?>
 <style>
 	.g-recaptcha {
 	    transform:scale(0.95);
@@ -6,7 +7,7 @@
 </style>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LedVqUZAAAAADR_lYfAllmKzo3OByJ930VUAMYt"></script> -->
-
+<?php } ?>
 <div class="container">
     <div class="row">
       	<div class="col-md-12">

@@ -9,10 +9,12 @@ function addCommas(val){
 }
 
 jQuery(document).ready(function($) {
-  $('.inputdatepicker').datepicker({
-      format: "dd-mm-yyyy",
-      language: "th",
-      autoclose: true,
-      toggleActive: true,
-    });
+  if($('.inputdatepicker').length){
+    $('.inputdatepicker').datepicker({
+        format: "dd-mm-yyyy",
+        language: "th",
+        autoclose: true,
+        toggleActive: true,
+      });
+  }
 });

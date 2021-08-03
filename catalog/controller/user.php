@@ -49,7 +49,11 @@
 	    }
 	    public function submitLogin(){
 	    	if(method_post()){
-	    		if ($this->googleCaptcha()) {
+	    		$captcha = true ;
+				if(PRODUCTION){
+					$captcha = $this->googleCaptcha();
+				}
+				if ($captcha==true) {
 	    			$data_login = array(
 						'user_email'    => post('user_email'),
 						'user_password' => post('user_password')
@@ -244,7 +248,11 @@
 			}
 
 	    	if(method_post()){
-	    		if ($this->googleCaptcha()==true) {
+	    		$captcha = true ;
+				if(PRODUCTION){
+					$captcha = $this->googleCaptcha();
+				}
+				if ($captcha==true) { 
 	    			$data_register = array(
 		    			'user_email'	=> post('user_email'),
 		    			'user_password'	=> post('user_password'),

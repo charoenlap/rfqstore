@@ -1,14 +1,37 @@
 <?php
-
   	define('DEBUG_MODE',false);
+  	define('PRODUCTION',false);
+
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
  
 	$base = str_replace('required', '', __DIR__);
+	// var_dump($_SERVER);exit();
+	if(PRODUCTION){
+		// Config DB SERVER
+		define('PREFIX', 'com_');
+		define('DB_HOST','localhost');
+		define('DB_USER','rfqstore_com');
+		define('DB_PASS','O78rpdgje');
+		define('DB_DB','rfqstore_com');
+		define('DOCUMENT_ROOT',$_SERVER['DOCUMENT_ROOT'].'/');
+	}else{
+		// Config DB localhost
+		define('PREFIX', 'com_');
+		define('DB_HOST','localhost');
+		define('DB_USER','root');
+		define('DB_PASS','root');
+		define('DB_DB','rfqstore');
+		define('DOCUMENT_ROOT',$_SERVER['DOCUMENT_ROOT'].'/rfqstore/');
+	}
   	define('MURL','https://rfqstore.com/');
+  	
+	
+	define('DATE_FORMAT','Y-m-d');
+
 	// define('MURL','https://www.fsoftpro.com/dohung/');
-	define('DOCUMENT_ROOT',$_SERVER['DOCUMENT_ROOT'].'/');
+	
 	define('ROW_IN_DOC','10');
 	define('BYTE_PER_KB','1000');
 	 
@@ -28,13 +51,7 @@
 	define('DB','mysqli');
 	define('KEY', 'appcom@fsp88');
 	
-	// Config DB localhost
-	define('PREFIX', 'com_');
-	define('DB_HOST','localhost');
-	define('DB_USER','rfqstore_com');
-	define('DB_PASS','O78rpdgje');
-	define('DB_DB','rfqstore_com');
-	define('DATE_FORMAT','Y-m-d');
+	
 	// Production
 	// define('PREFIX', 'dh_');
 	// define('DB_HOST','localhost');
@@ -62,14 +79,14 @@
 	// define('email_send','');
 	// define('email_stmpsecure','TLS');
 
-	use PHPMailer\PHPMailer\PHPMailer;
-	use PHPMailer\PHPMailer\Exception;
+	// use PHPMailer\PHPMailer\PHPMailer;
+	// use PHPMailer\PHPMailer\Exception;
 
-	require DOCUMENT_ROOT.'system/lib/PHPMailer-master-7/src/Exception.php';
-	require DOCUMENT_ROOT.'system/lib/PHPMailer-master-7/src/PHPMailer.php';
-	require DOCUMENT_ROOT.'system/lib/PHPMailer-master-7/src/SMTP.php';
-	global	$mail ;
-	$mail = new PHPMailer(true); //New instance, with exceptions enabled
+	// require DOCUMENT_ROOT.'system/lib/PHPMailer-master-7/src/Exception.php';
+	// require DOCUMENT_ROOT.'system/lib/PHPMailer-master-7/src/PHPMailer.php';
+	// require DOCUMENT_ROOT.'system/lib/PHPMailer-master-7/src/SMTP.php';
+	// global	$mail ;
+	// $mail = new PHPMailer(true); //New instance, with exceptions enabled
 
 	
 ?>

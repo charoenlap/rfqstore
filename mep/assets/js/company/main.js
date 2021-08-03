@@ -44,7 +44,10 @@ $(function(e){
 			$('#model-result-btn-submit').attr('data-url','index.php?route=home');
 			console.log("success");
 		})
-		.fail(function() {
+		.fail(function(a,b,c) {
+			console.log(a);
+			console.log(b);
+			console.log(c);
 			console.log("error");
 		})
 		.always(function() {

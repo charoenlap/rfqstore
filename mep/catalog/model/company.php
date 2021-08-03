@@ -14,22 +14,23 @@
 		}
 		public function listCompany($data = array()){
 			$result = array();
-			$id_user = $data['id_user'];
-			// $sql_company = "SELECT * FROM com_user_take_company 
-			// INNER JOIN com_company ON com_company.id_company = com_user_take_company.id_company 
-			// WHERE id_user = '".$this->escape((int)$id_user)."'";
+			$id_user = (int)$data['id_user'];
+			if(!empty($id_user)){
+				// $sql_company = "SELECT * FROM com_user_take_company 
+				// INNER JOIN com_company ON com_company.id_company = com_user_take_company.id_company 
+				// WHERE id_user = '".$this->escape((int)$id_user)."'";
 
-			// เลือกจาก Employee ที่มีสิทธิ์เข้าบริษัทนั้นๆ
-			$sql_company = "
-			SELECT *,c.id_company AS id_company FROM com_company c 
-			LEFT JOIN com_employee e ON e.id_company = c.id_company
-			WHERE e.id_user = ".(int)$id_user." OR c.id_user_create = ".(int)$id_user." GROUP BY c.id_company";
+				// เลือกจาก Employee ที่มีสิทธิ์เข้าบริษัทนั้นๆ
+				$sql_company = "
+				SELECT *,c.id_company AS id_company FROM com_company c 
+				LEFT JOIN com_employee e ON e.id_company = c.id_company
+				WHERE e.id_user = ".(int)$id_user." OR c.id_user_create = ".(int)$id_user." GROUP BY c.id_company";
 
-			// $sql_company_emp =";
+				// $sql_company_emp =";
 
 
-			$result = $this->query($sql_company)->rows;
-
+				$result = $this->query($sql_company)->rows;
+			}
 			return $result;
 		}
 		public function getCompany() {
@@ -55,6 +56,7 @@
 				'id_user_create'      => isset($data['id_user_create']) ? $this->escape($data['id_user_create']) : '',
 				'company_verify'      => isset($data['company_verify']) ? $this->escape($data['company_verify']) : '',
 				'company_name'        => isset($data['company_name']) ? $this->escape($data['company_name']) : '',
+				'company_url'        => isset($data['company_url']) ? $this->escape($data['company_url']) : '',
 				'company_tax_no'      => isset($data['company_tax_no']) ? $this->escape($data['company_tax_no']) : '',
 				'company_logo'        => isset($data['company_logo']) ? $this->escape($data['company_logo']) : '',
 				'company_tel'         => isset($data['company_tel']) ? $this->escape($data['company_tel']) : '',
@@ -80,22 +82,23 @@
 		}
 		public function editCompany($data = array()){
 			$result = array();
-			// $data_update = array(
-			// 	// 'id_user_create' 		=> $data['id_user_create'],
-			// 	// 'company_verify' 		=> $data['company_verify'],
-			// 	'company_name' 			=> $this->escape($data['company_name']),
-			// 	'company_tax_no' 		=> $this->escape($data['company_tax_no']),
-			// 	'company_logo' 			=> $this->escape($data['company_logo']),
-			// 	'company_tel' 			=> $this->escape($data['company_tel']),
-			// 	'company_address' 		=> $this->escape($data['company_address']),
-			// 	'company_province' 		=> $this->escape($data['company_province']),
-			// 	'company_head_office' 	=> $this->escape($data['company_head_office'])
-			// 	// 'company_date_create' 	=> $data['company_date_create']
-			// );
+			$data_update = array(
+				// 'id_user_create' 		=> $data['id_user_create'],
+				// 'company_verify' 		=> $data['company_verify'],
+				'company_name' 			=> $this->escape($data['company_name']),
+				'company_url' 			=> $this->escape($data['company_url']),
+				'company_tax_no' 		=> $this->escape($data['company_tax_no']),
+				'company_logo' 			=> $this->escape($data['company_logo']),
+				'company_tel' 			=> $this->escape($data['company_tel']),
+				'company_address' 		=> $this->escape($data['company_address']),
+				'company_province' 		=> $this->escape($data['company_province']),
+				'company_head_office' 	=> $this->escape($data['company_head_office'])
+				// 'company_date_create' 	=> $data['company_date_create']
+			);
 			// $this->where('id_user_create', $data['id_user']);
-			$this->where('id_company', $data['id_company']);
-			$result = $this->update('company', $data);
-			// $result = $this->update('company',$data_update,"id_user_create='".$data['id_user']."' AND id_company='".$data['id_company']."'");
+			// $this->where('id_company', $data['id_company']);
+			// $result = $this->update('company', $data);
+			$result = $this->update('company',$data_update,"id_user_create='".$data['id_user']."' AND id_company='".$data['id_company']."'");
 			return $result;
 		}
 	}

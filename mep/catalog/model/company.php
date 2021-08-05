@@ -56,7 +56,7 @@
 				'id_user_create'      => isset($data['id_user_create']) ? $this->escape($data['id_user_create']) : '',
 				'company_verify'      => isset($data['company_verify']) ? $this->escape($data['company_verify']) : '',
 				'company_name'        => isset($data['company_name']) ? $this->escape($data['company_name']) : '',
-				'company_url'        => isset($data['company_url']) ? $this->escape($data['company_url']) : '',
+				'company_url'         => isset($data['company_url']) ? $this->escape($data['company_url']) : '',
 				'company_tax_no'      => isset($data['company_tax_no']) ? $this->escape($data['company_tax_no']) : '',
 				'company_logo'        => isset($data['company_logo']) ? $this->escape($data['company_logo']) : '',
 				'company_tel'         => isset($data['company_tel']) ? $this->escape($data['company_tel']) : '',
@@ -66,7 +66,8 @@
 				'company_date_create' => isset($data['company_date_create']) ? $this->escape($data['company_date_create']) : '',
 				'sellstock'           => $data['sellstock'],
 				'buystock'            => $data['buystock'],
-				'shopstock'           => $data['shopstock']
+				'shopstock'           => $data['shopstock'],
+				'company_layout' 	  => isset($data['company_layout']) ? $this->escape($data['company_layout']) : '',
 			);
 			$result_id_company = $this->insert('company',$data_insert);
 			$data_insert_setting_bill = array(
@@ -92,13 +93,23 @@
 				'company_tel' 			=> $this->escape($data['company_tel']),
 				'company_address' 		=> $this->escape($data['company_address']),
 				'company_province' 		=> $this->escape($data['company_province']),
-				'company_head_office' 	=> $this->escape($data['company_head_office'])
+				'company_head_office' 	=> $this->escape($data['company_head_office']),
+				'company_layout' 		=> $this->escape($data['company_layout'])
 				// 'company_date_create' 	=> $data['company_date_create']
 			);
 			// $this->where('id_user_create', $data['id_user']);
 			// $this->where('id_company', $data['id_company']);
 			// $result = $this->update('company', $data);
 			$result = $this->update('company',$data_update,"id_user_create='".$data['id_user']."' AND id_company='".$data['id_company']."'");
+			return $result;
+		}
+		public function checkUrl($data = array()){
+			$result = array();
+			$sql_company = "SELECT * FROM com_company WHERE company_url = '".$data['company_url']."' AND id_company != '".$data['id_company']."'";
+			$result_company = $this->query($sql_company);
+			if($result_company->num_rows>0){
+				$result = "success";
+			}
 			return $result;
 		}
 	}

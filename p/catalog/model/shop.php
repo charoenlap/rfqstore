@@ -13,5 +13,16 @@
 			}
 			return $result;
 		}
+		public function getTheme($id){
+			$result = array();
+			$query 	= $this->query("SELECT * FROM com_company WHERE id_company =".$id);
+			$result = $query->row;
+			if($result['company_layout'] == "0"){
+				$result = "theme";
+			}elseif($result['company_layout'] == "1"){
+				$result = "themeTwo";
+			}
+			return $result;
+		}
 	}
 ?>

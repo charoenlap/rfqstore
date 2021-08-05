@@ -88,5 +88,9 @@
 			$result = $this->query($sql);
 			return $result->rows;
 		}
+		public function getTheme(){
+			$result = "theme";
+			return $result;
+		}
 	}
 ?>

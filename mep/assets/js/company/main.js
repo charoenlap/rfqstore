@@ -39,9 +39,15 @@ $(function(e){
 		})
 		.done(function(json) {
 			$('#model-result').modal('toggle');
-			$('#model-result-title').text(json.result);
-			$('#model-result-text').text(json.result_text);
-			$('#model-result-btn-submit').attr('data-url','index.php?route=home');
+			if(json.result == "success"){
+				$('#model-result-title').text(json.result);
+				$('#model-result-text').text(json.result_text);
+				$('#model-result-btn-submit').attr('data-url','index.php?route=home');
+			}else{
+				$('#model-result-title').text(json.result);
+				$('#model-result-text').text(json.result_text);
+				$('#model-result-btn-submit').attr('data-url','index.php?route=editCompany&id_company='+$id_company);
+			}
 			console.log("success");
 		})
 		.fail(function(a,b,c) {

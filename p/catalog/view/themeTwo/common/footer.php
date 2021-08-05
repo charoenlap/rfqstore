@@ -1,9 +1,4 @@
-<?php 
-  if(isset($script)){
-  foreach ($script as $key => $value) { 
-?>
-  <script src="<?php echo MURL.$value;?>"></script>
-<?php } } ?>
+
   <!-- Load Facebook SDK for JavaScript -->
       <div id="fb-root"></div>
       <script>

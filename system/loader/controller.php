@@ -143,10 +143,17 @@ jQuery(document).ready(function($) {
     }
     public function view($path='',$data=array(), $headfoot=true){
         // var_dump($_SERVER['REQUEST_TIME_FLOAT']);
+        $idCompany  = (isset($data['idCompany'])?$data['idCompany']:'');
+        if(!empty($idCompany)){
+            $theme  = $this->model('shop')->getTheme($idCompany);
+        }else{
+            $theme  = THEME;
+        }
         $time_start = microtime(true); 
 
         $absolute_path = '';
-        $absolute_path = BASE_CATALOG.'view/'.THEME.'/'.$path.'.php';
+        // $absolute_path = BASE_CATALOG.'view/'.THEME.'/'.$path.'.php';
+        $absolute_path = BASE_CATALOG.'view/'.$theme.'/'.$path.'.php';
         if(file_exists($absolute_path)){
             extract($data);
             $common_path = BASE_CATALOG.'controller/common.php';

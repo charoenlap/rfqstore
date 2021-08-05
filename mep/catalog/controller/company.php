@@ -262,7 +262,7 @@
 			$data['id_company'] 			= '';
 			$data['id_user'] 				= '';
 			$data['company_verify'] 		= '';
-			$data['company_url'] 		= '';
+			$data['company_url'] 			= '';
 			$data['company_name'] 			= '';
 			$data['company_tax_no'] 		= '';
 			$data['company_logo'] 			= '';
@@ -271,6 +271,7 @@
 			$data['company_province'] 		= '';
 			$data['company_head_office'] 	= '';
 			$data['company_date_create'] 	= '';
+			$data['company_layout']		 	= '';
 	    	$company = $this->model('company');
     		$data_permission = array(
     			'id_company'	=> $id_company,
@@ -280,24 +281,58 @@
     		$data['action'] = route('company/editCompany&id_company='.encrypt($id_company,$id_user));
     		if($result_permission){
 	    		if(method_post()){
-	    			$company_logo = post('company_logo');
-	    			$data_edit = array(
-						'id_company'          => $id_company,
-						'id_user'             => id_user(),
-						'company_name'        => post('company_name'),
-						'company_url'         => post('company_url'),
-						'company_tax_no'      => post('company_tax_no'),
-						'company_logo'        => $company_logo,
-						'company_tel'         => post('company_tel'),
-						'company_address'     => post('company_address'),
-						'company_province'    => post('company_province'),
-						'company_head_office' => post('company_head_office'),
-						'company_date_create' => post('company_date_create'),
-		    		);
-		    		$result = $company->editCompany($data_edit);
-		    		$data_result['result'] 			= 'success';
-		    		$data_result['result_text'] 	= 'แก้ไขเรียบร้อย';
-		    		$this->json($data_result);
+					if(empty(post('company_url'))){
+						$company_logo = post('company_logo');
+						$data_edit = array(
+							'id_company'          => $id_company,
+							'id_user'             => id_user(),
+							'company_name'        => post('company_name'),
+							'company_url'         => post('company_url'),
+							'company_tax_no'      => post('company_tax_no'),
+							'company_logo'        => $company_logo,
+							'company_tel'         => post('company_tel'),
+							'company_address'     => post('company_address'),
+							'company_province'    => post('company_province'),
+							'company_head_office' => post('company_head_office'),
+							'company_date_create' => post('company_date_create'),
+							'company_layout'      => post('company_layout'),
+						);
+						$result = $company->editCompany($data_edit);
+						$data_result['result'] 			= 'success';
+						$data_result['result_text'] 	= 'แก้ไขเรียบร้อย';
+						$this->json($data_result);
+					}else{
+						$dataCheck 	= array(
+							'id_company'	=> $id_company,
+							'company_url'	=> post('company_url')
+						);
+						$urlCheck 	= $company->checkUrl($dataCheck);
+						if($urlCheck == "success"){
+							$data_result['result'] 			= 'failed';
+							$data_result['result_text'] 	= 'ชื่อ Url นี้ถูกใช้งานแล้ว';
+							$this->json($data_result);
+						}else{
+							$company_logo = post('company_logo');
+							$data_edit = array(
+								'id_company'          => $id_company,
+								'id_user'             => id_user(),
+								'company_name'        => post('company_name'),
+								'company_url'         => post('company_url'),
+								'company_tax_no'      => post('company_tax_no'),
+								'company_logo'        => $company_logo,
+								'company_tel'         => post('company_tel'),
+								'company_address'     => post('company_address'),
+								'company_province'    => post('company_province'),
+								'company_head_office' => post('company_head_office'),
+								'company_date_create' => post('company_date_create'),
+								'company_layout'      => post('company_layout'),
+							);
+							$result = $company->editCompany($data_edit);
+							$data_result['result'] 			= 'success';
+							$data_result['result_text'] 	= 'แก้ไขเรียบร้อย';
+							$this->json($data_result);
+						}
+					}
 	    		}
 	    		$data_company = array(
 	    			'id_company' => $id_company

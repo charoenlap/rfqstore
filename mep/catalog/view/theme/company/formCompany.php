@@ -25,6 +25,13 @@
 							    <small class="form-text text-muted"></small>
 							  </div>
 							  <div class="form-group">
+							    <label for="">Layout</label>
+							    <select name="company_layout" id="" class="form-control">
+									<option value="0" <?php if($company_layout == '0'){ echo "selected"; } ?>>Layout One</option>
+									<option value="1" <?php if($company_layout == '1'){ echo "selected"; } ?>>Layout Two</option>
+								</select>
+							  </div>
+							  <div class="form-group">
 							    <label for="">หมายเลขผู้เสียภาษี</label>
 							    <input type="text" class="form-control" placeholder="" name="company_tax_no" value="<?php echo $company_tax_no; ?>">
 							    <small class="form-text text-muted"></small>

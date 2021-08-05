@@ -17,23 +17,36 @@
   <link rel="icon" href="assets/image/logo.png" type="image/icon type">
 
   <title><?php echo $title;?></title>
+  <link rel="stylesheet" href="<?php echo MURL; ?>p/assets/main.css">
+  <!-- <link href="<?php echo MURL; ?>p/assets/boostrap_jquery/css/bootstrap.min.css" rel="stylesheet" > -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="<?php echo MURL; ?>p/assets/fontawesome/css/fontawesome.css" rel="stylesheet">
   <?php if(isset($style)){ 
     foreach ($style as $key => $value) { ?>
-    <link rel="stylesheet" href="<?php echo $value;?>">
+    <link rel="stylesheet" href="<?php echo MURL.$value;?>">
   <?php } } ?>
-  <link rel="stylesheet" href="assets/main.css">
-  <link href="assets/boostrap_jquery/css/bootstrap.css" rel="stylesheet" >
-  <link href="assets/fontawesome/css/fontawesome.css" rel="stylesheet">
-
-  <script src="assets/boostrap_jquery/js/jquery.js"></script>
-  <script 
-    src="assets/boostrap_jquery/js/popper.js"></script>
-  <script src="assets/boostrap_jquery/js/bootstrap.js"></script>
-  <script src="assets/fontawesome/js/all.js"></script>
-  <?php 
-  if(isset($script)){
-  foreach ($script as $key => $value) { ?>
-    <script src="<?php echo $value;?>"></script>
-  <?php } } ?>
+  
+  <script src="<?php echo MURL; ?>p/assets/boostrap_jquery/js/jquery.js"></script>
+  <script src="<?php echo MURL; ?>p/assets/boostrap_jquery/js/popper.js"></script>
+  <script src="<?php echo MURL; ?>p/assets/boostrap_jquery/js/bootstrap.js"></script>
+  <script src="<?php echo MURL; ?>p/assets/fontawesome/js/all.js"></script>
+  <!-- <?php 
+    if(isset($script)){
+    foreach ($script as $key => $value) { ?>
+    <script src="<?php echo MURL.$value;?>"></script>
+  <?php } } ?> -->
 </head>
-<body class="">
+<body class="pt-5">
+<nav class="navbar navbar-expand-lg navbar-white bg-white fixed-top">
+  <a class="navbar-brand text-info font-weight-bold" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active text-secondary font-weight-bold" href="#">Home</a>
+      <a class="nav-item nav-link text-secondary font-weight-bold" href="#">Features</a>
+      <a class="nav-item nav-link text-secondary font-weight-bold" href="#">Pricing</a>
+    </div>
+  </div>
+</nav>

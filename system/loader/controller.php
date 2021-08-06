@@ -38,55 +38,55 @@ class Controller{
         $ids = $id;
         if ($multiple==true) { $ids .= time(); }
         $html = "
-<input type='file' name='".$id.($multiple?'[]':'')."' id='jsfile_".$ids."' value='".$default."' />
-<div class='row'>
-  <div class='col-12'>
-    <img src='".$default."' id='jspreview_".$ids."' class='img-thumbnail mb-2'>
-  </div>
-  <div class='col-12'>
-    <button type='button' id='jsadd_".$ids."' class='btn btn-primary'><i class='far fa-image'></i></button>
-    <button type='button' id='jsedit_".$ids."' class='btn btn-outline-primary'><i class='far fa-image'></i></button>
-    <button type='button' id='jsdel_".$ids."' class='btn btn-danger'><i class='fas fa-trash-alt'></i></button>    
-  </div>
-</div>
-<script type='text/javascript'>
-jQuery(document).ready(function($) {
-    $('#jsfile_".$ids.",#jsedit_".$ids.",#jsdel_".$ids.",#jspreview_".$ids."').hide();
+        <input type='file' name='".$id.($multiple?'[]':'')."' id='jsfile_".$ids."' value='".$default."' />
+        <div class='row'>
+          <div class='col-12'>
+            <img src='".$default."' id='jspreview_".$ids."' class='img-thumbnail mb-2'>
+          </div>
+          <div class='col-12'>
+            <button type='button' id='jsadd_".$ids."' class='btn btn-primary'><i class='far fa-image'></i></button>
+            <button type='button' id='jsedit_".$ids."' class='btn btn-outline-primary'><i class='far fa-image'></i></button>
+            <button type='button' id='jsdel_".$ids."' class='btn btn-danger'><i class='fas fa-trash-alt'></i></button>    
+          </div>
+        </div>
+        <script type='text/javascript'>
+        jQuery(document).ready(function($) {
+            $('#jsfile_".$ids.",#jsedit_".$ids.",#jsdel_".$ids.",#jspreview_".$ids."').hide();
 
-    if ('".$default."'!='') {
-      $('#jsadd_".$ids.",#jsfile_".$ids."').hide();
-      $('#jsedit_".$ids.",#jsdel_".$ids.",#jspreview_".$ids."').show();
-    }
+            if ('".$default."'!='') {
+              $('#jsadd_".$ids.",#jsfile_".$ids."').hide();
+              $('#jsedit_".$ids.",#jsdel_".$ids.",#jspreview_".$ids."').show();
+            }
 
-    $('#jsadd_".$ids.",#jsedit_".$ids."').click(function(event) {
-      $('#jsfile_".$ids."').trigger('click');
-    });
+            $('#jsadd_".$ids.",#jsedit_".$ids."').click(function(event) {
+              $('#jsfile_".$ids."').trigger('click');
+            });
 
-    $('#jsdel_".$ids."').click(function(event) {
-      $('#jsedit_".$ids.",#jsdel_".$ids."').hide();
-      $('#jsadd_".$ids."').show();
-      $('#jspreview_".$ids."').attr('src', '').hide();
-    });
+            $('#jsdel_".$ids."').click(function(event) {
+              $('#jsedit_".$ids.",#jsdel_".$ids."').hide();
+              $('#jsadd_".$ids."').show();
+              $('#jspreview_".$ids."').attr('src', '').hide();
+            });
 
-    $('#jsfile_".$ids."').change(function(event) {
-      if (this.files && this.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          $('#jsedit_".$ids.",#jsdel_".$ids."').show();
-          $('#jsadd_".$ids."').hide();
-          $('#jspreview_".$ids."').attr('src', e.target.result).show();
-        }
-        reader.readAsDataURL(this.files[0]);
-      }
-    });
+            $('#jsfile_".$ids."').change(function(event) {
+              if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                  $('#jsedit_".$ids.",#jsdel_".$ids."').show();
+                  $('#jsadd_".$ids."').hide();
+                  $('#jspreview_".$ids."').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(this.files[0]);
+              }
+            });
 
-    $('#jsdel_".$ids."').click(function(event) {
-      $('#jsfile_".$ids."').val('');
-      $('#jsedit_".$ids.",#jsdel_".$ids."').hide();
-      $('#jsadd_".$ids."').show();
-    });
-});
-</script>";
+            $('#jsdel_".$ids."').click(function(event) {
+              $('#jsfile_".$ids."').val('');
+              $('#jsedit_".$ids.",#jsdel_".$ids."').hide();
+              $('#jsadd_".$ids."').show();
+            });
+        });
+        </script>";
 
 
         return $html;
@@ -142,12 +142,17 @@ jQuery(document).ready(function($) {
         return $result;
     }
     public function view($path='',$data=array(), $headfoot=true){
-        // var_dump($_SERVER['REQUEST_TIME_FLOAT']);
-        $idCompany  = (isset($data['idCompany'])?$data['idCompany']:'');
-        if(!empty($idCompany)){
-            $theme  = $this->model('shop')->getTheme($idCompany);
-        }else{
-            $theme  = THEME;
+        $theme  = THEME;
+        $shop = get('shop');
+        if(!empty($shop)){
+            $data_select = array(
+                'shop' => trim($shop)
+            );
+            $shop       = $this->model('shop')->findShop($data_select);
+            $id_company = (int)$shop['detail']['id_company'];
+            if(!empty($id_company)){
+                $theme  = $this->model('shop')->getTheme($id_company);
+            }
         }
         $time_start = microtime(true); 
 
@@ -472,38 +477,24 @@ jQuery(document).ready(function($) {
         return $html;
     }
     public function render($path='',$data=array()){
-        // $absolute_path = '';
-        // if(!check_admin_path()){
-        //     $absolute_path = BASE_CATALOG.'view/'.THEME.'/'.$path.'.php';
-        // }else{
-        //     $absolute_path = BASE_CATALOG_ADMIN.'view/'.THEME.'/'.$path.'.php';
-        // }
-        // if(file_exists($absolute_path)){
-            $absolute_path = '';
-            $absolute_path = BASE_CATALOG.'view/'.THEME.'/'.$path.'.php';
-            if(file_exists($absolute_path)){
-                extract($data);
-                require_once($absolute_path);
+        $theme  = THEME;
+        $shop = get('shop');
+        if(!empty($shop)){
+            $data_select = array(
+                'shop' => trim($shop)
+            );
+            $shop       = $this->model('shop')->findShop($data_select);
+            $id_company = (int)$shop['detail']['id_company'];
+            if(!empty($id_company)){
+                $theme  = $this->model('shop')->getTheme($id_company);
             }
-            // if($path!="common/header" or $path!="common/footer"){
-           
-            //     if(!check_admin_path()){
-            //         $common_path = BASE_CATALOG.'controller/common.php';
-            //     }else{
-            //         $common_path = BASE_CATALOG_ADMIN.'controller/common.php';
-            //     }
-            //     require_once($common_path);
-            //  $arr_bypass = array('common/header','common/footer');
-            // if(in_array($path,$arr_bypass)){
-            //     $common = new CommonController();
-            //     $common->header();
-            //     require_once($absolute_path);
-            //     $common->footer();
-            // }
-        // }else{
-        //     echo 'File view/'.$absolute_path.' Not found!';
-        //     exit();
-        // }
+        }
+        $absolute_path = '';
+        $absolute_path = BASE_CATALOG.'view/'.$theme.'/'.$path.'.php';
+        if(file_exists($absolute_path)){
+            extract($data);
+            require_once($absolute_path);
+        }
     }
 
     public function load_controller($path){

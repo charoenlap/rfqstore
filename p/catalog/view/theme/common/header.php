@@ -36,9 +36,9 @@
     <script src="<?php echo MURL.$value;?>"></script>
   <?php } } ?> -->
 </head>
-<body class="pt-5">
-<nav class="navbar navbar-expand-lg navbar-white bg-white fixed-top">
-  <a class="navbar-brand text-info font-weight-bold" href="#">Navbar</a>
+<body class="">
+<!-- <nav class="navbar navbar-expand-lg navbar-white bg-white fixed-top">
+  <a class="navbar-brand text-info font-weight-bold" href="#"><?php echo $title;?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -47,6 +47,27 @@
       <a class="nav-item nav-link active text-secondary font-weight-bold" href="#">Home</a>
       <a class="nav-item nav-link text-secondary font-weight-bold" href="#">Features</a>
       <a class="nav-item nav-link text-secondary font-weight-bold" href="#">Pricing</a>
+    </div>
+  </div>
+</nav> -->
+<section class="py-5 bg-white">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="font-weight-bold mb-0"><?php echo $title; ?></h1>
+        </div>
+      </div>
+  </div>
+</section>
+<nav class="navbar navbar-expand-lg navbar-dark bg-navbar-dark sticky-top">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active font-weight-bold px-md-5" href="#">Home</a>
+      <a class="nav-item nav-link font-weight-bold px-md-5" href="#">Product</a>
+      <a class="nav-item nav-link font-weight-bold px-md-5" href="#">Contact</a>
     </div>
   </div>
 </nav>

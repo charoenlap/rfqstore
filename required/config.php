@@ -1,6 +1,6 @@
 <?php
   	define('DEBUG_MODE',false);
-  	define('PRODUCTION',true);
+  	define('PRODUCTION',false);
 
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
@@ -16,6 +16,7 @@
 		define('DB_PASS','O78rpdgje');
 		define('DB_DB','rfqstore_com');
 		define('DOCUMENT_ROOT',$_SERVER['DOCUMENT_ROOT'].'/');
+		define('MURL','https://rfqstore.com/');
 	}else{
 		// Config DB localhost
 		define('PREFIX', 'com_');
@@ -24,8 +25,9 @@
 		define('DB_PASS','root');
 		define('DB_DB','rfqstore');
 		define('DOCUMENT_ROOT',$_SERVER['DOCUMENT_ROOT'].'/rfqstore/');
+		define('MURL','http://localhost/rfqstore/');
 	}
-  	define('MURL','https://rfqstore.com/');
+  	
   	
 	
 	define('DATE_FORMAT','Y-m-d');

@@ -1,0 +1,7 @@
+html,body {
+    background: #f4f4f4;
+}
+.product-hover {
+    cursor: pointer;
+    transition: all 0.25s;
+}

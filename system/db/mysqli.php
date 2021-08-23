@@ -41,7 +41,7 @@ class db{
 	}
 	function __destruct(){
 		// if($check_open==1){
-			// $this->db->close();
+			$this->db->close();
 		// }
     }
     public function escape($text_escape=''){

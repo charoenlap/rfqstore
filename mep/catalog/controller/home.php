@@ -22,7 +22,6 @@
 		    	);
 		    	$data['id_user'] = $id_user;
 		    	$data['list_company'] = $company->listCompany($data_company);
-
 		    	$data['success'] = ''; 
 		    	if ($this->hasSession('success')) {
 		    		$data['success'] = $this->getSession('success');

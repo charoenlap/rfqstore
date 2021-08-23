@@ -158,6 +158,7 @@ class Controller{
 
         $absolute_path = '';
         // $absolute_path = BASE_CATALOG.'view/'.THEME.'/'.$path.'.php';
+        // echo BASE_CATALOG.'<';exit();
         $absolute_path = BASE_CATALOG.'view/'.$theme.'/'.$path.'.php';
         if(file_exists($absolute_path)){
             extract($data);
@@ -509,13 +510,17 @@ class Controller{
         $model = new $string_model();
         return $model;
     }
-    public function model($path){
+    public function model($path,$path_catalog=''){
+        $p_catalog = BASE_CATALOG;
+        if(!empty($path_catalog)){
+            $p_catalog = $path_catalog;
+        }
         // echo BASE.'system/db/'.DB.".php";exit();
         // $base_path = str_replace('adminFsoftpro88/', '', BASE.'system/db/'.DB.".php");
         // $base_path = str_replace('mep/', '', BASE.'system/db/'.DB.".php");
         // echo DOCUMENT_ROOT;exit();
         require_once(DOCUMENT_ROOT.'system/db/'.DB.".php");
-        $absolute_path = BASE_CATALOG.'model/'.$path.'.php';
+        $absolute_path = $p_catalog.'model/'.$path.'.php';
         require_once($absolute_path);
         $string_model = ucfirst(strtolower($path))."Model";
         $model = new $string_model();

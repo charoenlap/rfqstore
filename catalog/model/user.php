@@ -15,7 +15,18 @@
 				$id_user 			= $result_user->row['id_user'];
 				$user_key 			= $result_user->row['user_key'];
 				$result 			= $result_user->row;
+				$result['id_user']	= $id_user;
+				$result['user_key']	= $user_key;
+				$result['status']	= 'success';
 				$result['token'] 	= encode($id_user,$user_key);
+				$result['token_user'] 	= encrypt($id_user,$user_key);
+				// $result['token_decode'] = decrypt($result['token_user'],$user_key);
+			}else{
+				$result = array(
+					'status'		=> 'fail',
+					'user_email'	=> $user_email,
+					'user_password'	=> $user_password
+				);
 			}
 			return $result;
 		}

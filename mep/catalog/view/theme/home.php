@@ -23,15 +23,15 @@
                     </div>
                 </div>
             </div> -->
-            <div class="row  mt-2">
+            <div class="row">
                 <?php foreach($list_company as $val){ 
                         $id_company = encrypt($val['id_company']);
                 ?>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 ">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-2">
                   <div class="card">
                       <div class="card-body text-center">
                         <img src="../assets/image/logo.png" alt="" class="mb-3 w-50">
-                        <h5 class="card-title"><?php echo $val['company_name']; ?></h5>
+                        <h5 class="card-title" style="height: 40px;"><?php echo $val['company_name']; ?></h5>
                         <!-- <p class="card-text">Some quick example text to build.</p> -->
                         <p class="text-success">Verify</p>
                         <div class="row">

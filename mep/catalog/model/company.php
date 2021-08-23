@@ -33,6 +33,26 @@
 			}
 			return $result;
 		}
+		public function checkCompany($data = array()){
+			$result = array();
+			$id_user 	= (int)$data['id_user'];
+			$id_company = (int)$data['id_company'];
+			if(!empty($id_user)){
+				// $sql_company = "SELECT * FROM com_user_take_company 
+				// INNER JOIN com_company ON com_company.id_company = com_user_take_company.id_company 
+				// WHERE id_user = '".$this->escape((int)$id_user)."'";
+
+				// เลือกจาก Employee ที่มีสิทธิ์เข้าบริษัทนั้นๆ
+				$sql_company = "
+				SELECT *,c.id_company AS id_company FROM com_company c 
+				LEFT JOIN com_employee e ON e.id_company = c.id_company
+				WHERE e.id_user = ".(int)$id_user." OR c.id_user_create = ".(int)$id_user." 
+				AND c.id_company = ".(int)$id_company."
+				GROUP BY c.id_company";
+				$result = $this->query($sql_company)->num_rows;
+			}
+			return $result;
+		}
 		public function getCompany() {
 			$this->where('id_company', id_company());
 			$result = $this->get('company');

@@ -44,7 +44,7 @@
 
     <!-- Sidebar -->
     <div class="border-right menu-left" id="sidebar-wrapper">
-      <div class="sidebar-heading text-theme text-center"><img src="../assets/image/logo.png" alt="" width="100"><br>App company</div>
+      <div class="sidebar-heading text-theme text-center"><img src="../assets/image/logo.png" alt="" width="100"></div>
       <div class="list-group menu-list list-group-flush">
         <a href="<?php echo route('home'); ?>" class="list-group-item list-group-item-action">
           <i class="fas fa-tachometer-alt"></i>

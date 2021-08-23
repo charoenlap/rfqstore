@@ -1,5 +1,8 @@
 <?php 
 	class UserModel extends db {
+		public function test(){
+			return "test";
+		}
 		public function getUserByEmail($email){
 			$result = array();
 			$result = $this->query("SELECT * FROM com_user WHERE user_email = '$email' ");

@@ -26,6 +26,7 @@
 	    }
 	    public function listCompany() {
 	    	$data = array();
+	    	$result = array();
 			if(method_post()){
 				$token_user = post('token_user');
 				$user_key 	= post('user_key');

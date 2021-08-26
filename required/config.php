@@ -1,6 +1,6 @@
 <?php
   	define('DEBUG_MODE',false);
-  	define('PRODUCTION',false);
+  	define('PRODUCTION',true);
 
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);

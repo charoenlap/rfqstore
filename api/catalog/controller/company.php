@@ -51,6 +51,8 @@
 	    		$token_user = post('token_user');
 				$user_key 	= post('user_key');
 				$id_user 	= decrypt($token_user,$user_key);
+				$id_company = decrypt(post('id_company'));
+
 
 	    		$company = $this->model('company',PATH_MODEL_CATALOG);
 	    		$company_logo = post('company_logo');
@@ -71,7 +73,7 @@
 					'company_date_create' => date('Y-m-d H:i:s')
 	    		);
 
-	    		api(route('upload/mkdir'), 'POST', array('path'=>'/', 'name'=>id_company()));
+	    		api(route('upload/mkdir'), 'POST', array('path'=>'/', 'name'=>$id_company));
 
 	    		$result = $company->addCompany($data_insert);
 
@@ -100,17 +102,99 @@
 	    		$return = array();
 	    		if ($result>0) {
 	    			$return = array(
-	    				'status' => 'success'
+	    				'status' => '00',
+	    				'desc' => 'success'
 	    			);
 	    		}else{
 	    			$return = array(
-	    				'status' => 'fail'
+	    				'status' => '01',
+	    				'desc' => 'fail'
 	    			);
 	    		}
-	    		return $this->json($return);
+	    		$this->json($return);
 	    		// redirect('home');
 	    	}
 	    }
+	    public function editCompany(){
+			$data = array();
+			$token_user = post('token_user');
+			$user_key 	= post('user_key');
+			$id_user 	= decrypt($token_user,$user_key);
+			$id_company = decrypt(post('id_company'));
+
+	    	$company = $this->model('company',PATH_MODEL_CATALOG);
+    		$data_permission = array(
+    			'id_company'	=> $id_company,
+    			'id_user'		=> $id_user
+    		);
+    		$result_permission = $company->permission($data_permission);
+    		if($result_permission){
+	    		if(method_post()){
+					if(empty(post('company_url'))){
+						$company_logo = post('company_logo');
+						$data_edit = array(
+							'id_company'          => $id_company,
+							'id_user'             => id_user(),
+							'company_name'        => post('company_name'),
+							'company_url'         => post('company_url'),
+							'company_tax_no'      => post('company_tax_no'),
+							'company_logo'        => $company_logo,
+							'company_tel'         => post('company_tel'),
+							'company_address'     => post('company_address'),
+							'company_province'    => post('company_province'),
+							'company_head_office' => post('company_head_office'),
+							'company_date_create' => post('company_date_create'),
+							'company_layout'      => post('company_layout'),
+						);
+						$result = $company->editCompany($data_edit);
+						$data_result['result'] 			= 'success';
+						$data_result['result_text'] 	= 'แก้ไขเรียบร้อย';
+						$this->json($data_result);
+					}else{
+						$dataCheck 	= array(
+							'id_company'	=> $id_company,
+							'company_url'	=> post('company_url')
+						);
+						$urlCheck 	= $company->checkUrl($dataCheck);
+						if($urlCheck == "success"){
+							$data_result['result'] 			= 'failed';
+							$data_result['result_text'] 	= 'ชื่อ Url นี้ถูกใช้งานแล้ว';
+							$this->json($data_result);
+						}else{
+							$company_logo = post('company_logo');
+							$data_edit = array(
+								'id_company'          => $id_company,
+								'id_user'             => id_user(),
+								'company_name'        => post('company_name'),
+								'company_url'         => post('company_url'),
+								'company_tax_no'      => post('company_tax_no'),
+								'company_logo'        => $company_logo,
+								'company_tel'         => post('company_tel'),
+								'company_address'     => post('company_address'),
+								'company_province'    => post('company_province'),
+								'company_head_office' => post('company_head_office'),
+								'company_date_create' => post('company_date_create'),
+								'company_layout'      => post('company_layout'),
+							);
+							$result = $company->editCompany($data_edit);
+							$data_result['result'] 			= 'success';
+							$data_result['result_text'] 	= 'แก้ไขเรียบร้อย';
+							$this->json($data_result);
+						}
+					}
+	    		}
+	    		$data_company = array(
+	    			'id_company' => $id_company
+	    		);
+	    		$result_company = $company->companyDetail($data_company);
+	    		foreach($result_company as $key => $val){
+	    			$data[$key] = $val;
+	    		}
+	    	}else{
+    			$data['result'] = 'คุณไม่มีสิทธิ์ในการเข้าถึง';
+    		}
+    		$this->json($data);
+		}
 	    public function makedir($path) {
 			$dir = DOCUMENT_ROOT."/uploads/";
 			if( is_dir($dir.$path) === false )
